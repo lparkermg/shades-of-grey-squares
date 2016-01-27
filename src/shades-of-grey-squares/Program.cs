@@ -35,14 +35,28 @@ namespace shades_of_grey_squares
                     for (var pass = 0; pass < passes; pass++)
                     {
                         var rgbVal = _rand.Next(1, 255);
-                        var wh = _rand.Next(1, size);
+                        var wh = _rand.Next(1, size/2);
                         var x = _rand.Next(0, size);
                         var y = _rand.Next(0, size);
                         var newGrey = Color.FromArgb(150, rgbVal, rgbVal, rgbVal);
                         g.FillRectangle(new SolidBrush(newGrey),x,y,wh,wh);
                     }
                 }
-                
+                SaveImage(bmp);
+            }
+        }
+
+        private static void SaveImage(Bitmap bmp)
+        {
+            var fileLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var filePath = Path.GetDirectoryName(fileLocation);
+            if (!Directory.Exists(filePath + "\\Images"))
+                Directory.CreateDirectory(filePath + "\\Images");
+
+            var fileCount = Directory.GetFiles(filePath + "\\Images").Length;
+            using (var fs = new FileStream(filePath + "\\Images\\" + fileCount + ".png", FileMode.CreateNew, FileAccess.Write, FileShare.Write))
+            {
+                bmp.Save(fs,ImageFormat.Png);
             }
         }
     }
