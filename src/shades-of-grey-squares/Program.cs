@@ -13,15 +13,23 @@ namespace shades_of_grey_squares
     class Program
     {
         private static Random _rand;
-
+        private static int _imagesToGen = 25;
+        private static int _size = 1024;
+        private static int _passes = 1000;
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Shades of Grey Squares.\n\n");
-            Console.WriteLine("Generating Squares at 1024 on 500 passes.");
+            
+            Console.WriteLine("Welcome to Shades of Grey Squares.\n");
+            Console.WriteLine($"Generating Squares at {_size} on {_passes} passes, {_imagesToGen} time(s).");
             _rand = new Random();
             Console.WriteLine("In Progress...");
-            DrawSquares(1024,500);
-            Console.WriteLine("Complete.");
+            for (var image = 0; image < _imagesToGen; image++)
+            {
+                DrawSquares(_size, _passes);
+                Console.Write(".");
+            }
+            Console.WriteLine("");
+            Console.WriteLine("Complete!!");
             Console.ReadLine();
 
         }
@@ -34,11 +42,11 @@ namespace shades_of_grey_squares
                 {
                     for (var pass = 0; pass < passes; pass++)
                     {
-                        var rgbVal = _rand.Next(1, 255);
-                        var wh = _rand.Next(1, size/2);
-                        var x = _rand.Next(0, size);
-                        var y = _rand.Next(0, size);
-                        var newGrey = Color.FromArgb(150, rgbVal, rgbVal, rgbVal);
+                        var rgbVal = _rand.Next(50, 255);
+                        var wh = _rand.Next(1, size/3);
+                        var x = _rand.Next(-50, size);
+                        var y = _rand.Next(-50, size);
+                        var newGrey = Color.FromArgb(100, rgbVal, rgbVal, rgbVal);
                         g.FillRectangle(new SolidBrush(newGrey),x,y,wh,wh);
                     }
                 }
