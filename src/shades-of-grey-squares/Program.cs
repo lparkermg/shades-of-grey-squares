@@ -15,7 +15,8 @@ namespace shades_of_grey_squares
         private static Random _rand;
         private static int _imagesToGen = 25;
         private static int _size = 1024;
-        private static int _passes = 1000;
+        private static int _passes = 2000;
+        private static int _div = 8;
         static void Main(string[] args)
         {
             
@@ -27,7 +28,7 @@ namespace shades_of_grey_squares
             {
                 try
                 {
-                    DrawSquares(_size, _passes);
+                    DrawSquares(_size, _passes,_div);
                 }
                 catch (IOException ioe)
                 {
@@ -45,7 +46,7 @@ namespace shades_of_grey_squares
 
         }
 
-        private static void DrawSquares(int size, int passes)
+        private static void DrawSquares(int size, int passes, int divider)
         {
             using (var bmp = new Bitmap(size, size))
             {
@@ -54,7 +55,7 @@ namespace shades_of_grey_squares
                     for (var pass = 0; pass < passes; pass++)
                     {
                         var rgbVal = _rand.Next(50, 255);
-                        var wh = _rand.Next(1, size/3);
+                        var wh = _rand.Next(1, size/divider);
                         var x = _rand.Next(-50, size);
                         var y = _rand.Next(-50, size);
                         var newGrey = Color.FromArgb(100, rgbVal, rgbVal, rgbVal);
