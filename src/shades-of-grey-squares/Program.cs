@@ -25,8 +25,19 @@ namespace shades_of_grey_squares
             Console.WriteLine("In Progress...");
             for (var image = 0; image < _imagesToGen; image++)
             {
-                DrawSquares(_size, _passes);
-                Console.Write(".");
+                try
+                {
+                    DrawSquares(_size, _passes);
+                }
+                catch (IOException ioe)
+                {
+                    Console.WriteLine("The File already exists...");
+                    throw;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"An Exception Occured: {e} - {e.Message}\nStack Trace:{e.StackTrace}");
+                }
             }
             Console.WriteLine("");
             Console.WriteLine("Complete!!");
@@ -58,11 +69,11 @@ namespace shades_of_grey_squares
         {
             var fileLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
             var filePath = Path.GetDirectoryName(fileLocation);
-            if (!Directory.Exists(filePath + "\\Images"))
-                Directory.CreateDirectory(filePath + "\\Images");
+            if (!Directory.Exists($"{filePath}\\Images"))
+                Directory.CreateDirectory($"{filePath}\\Images");
 
-            var fileCount = Directory.GetFiles(filePath + "\\Images").Length;
-            using (var fs = new FileStream(filePath + "\\Images\\" + fileCount + ".png", FileMode.CreateNew, FileAccess.Write, FileShare.Write))
+            var fileCount = Directory.GetFiles($"{filePath}\\Images").Length;
+            using (var fs = new FileStream($"{filePath}\\Images\\{fileCount}.png", FileMode.CreateNew, FileAccess.Write, FileShare.Write))
             {
                 bmp.Save(fs,ImageFormat.Png);
             }
