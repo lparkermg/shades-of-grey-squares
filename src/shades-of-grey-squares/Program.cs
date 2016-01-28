@@ -50,7 +50,6 @@ namespace shades_of_grey_squares
                 using (var g = Graphics.FromImage(bmp))
                 {
                     g.FillRectangle(new SolidBrush(Color.White),0,0,size,size);
-                    //Noise(g, size);
                     Noise(g, size);
 
                 }
