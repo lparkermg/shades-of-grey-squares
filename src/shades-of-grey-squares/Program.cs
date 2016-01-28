@@ -51,12 +51,11 @@ namespace shades_of_grey_squares
                 {
                     g.FillRectangle(new SolidBrush(Color.White),0,0,size,size);
                     //Noise(g, size);
-                    RandomAlgo(g, size, passes, divider);
+                    Noise(g, size);
 
                 }
 
-                var blurred = Blur(bmp, new Rectangle(0, 0, size, size), 5);
-                SaveImage(blurred);
+                SaveImage(bmp);
             }
         }
 
